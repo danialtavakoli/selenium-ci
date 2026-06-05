@@ -4,20 +4,30 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.time.Duration;
 
 public class DriverLifeCycle {
     
-protected WebDriver driver;
+    protected WebDriver driver;
 
     @BeforeEach
     public void setUp(){
-        // declaration and instantiation of objects/variables
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
     }
 
     @AfterEach
     public void teardown(){
-        // close Chrome
-        driver.close();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

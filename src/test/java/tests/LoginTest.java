@@ -18,10 +18,7 @@ public class LoginTest extends DriverLifeCycle {
     @Test
     public void testLoginOk() {
         login = new LoginFormPO(driver);
-        login.with("user", "user");
-        System.out.println(driver.getCurrentUrl());
-        // we go to the login-success page
-        loginSuccess = new LoginSuccessPO(driver);
+        loginSuccess = login.with("user", "user");
         assertTrue(loginSuccess.successBoxIsPresent());
     }
 
